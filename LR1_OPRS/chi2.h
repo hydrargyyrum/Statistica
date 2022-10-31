@@ -63,7 +63,7 @@ vector <double> npi(vector <double> data, int N) { // Вычисление теоретической
 	for (int k = 0; k < N; k++) {
 	tmp[k] = 0.5 * (erf((data[0] + (k + 1) * length - mean_) / (sqrt(2) * sqrt(disp_))) -
 		erf((data[0] + k * length - mean_) / (sqrt(2) * sqrt(disp_))));
-		//cout << "teor = " << tmp[k] << endl;
+		cout << "teor = " << tmp[k] << endl;
 	}
 	return tmp;
 }
