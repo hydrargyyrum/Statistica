@@ -6,30 +6,57 @@
 #include "statisticalCharacteristics.h"
 using namespace std;
 
-double KS(vector<double> F, vector<double> F0) { // Вычисление значения статистики Колмогорова-Смирнова
-	double difference = 0;
-	double maxDif = -1;
-	int n = F.size();
-	for (int i = 0; i < n; i++)
+void update_max(double& max, double& curr)
+{
+	if (curr >= max)
 	{
-		difference = abs(F[i] - F0[i]);
-		if (difference >= maxDif) maxDif = difference;
+		max = curr;
 	}
-	return maxDif;
 }
 
-vector <double> F0(vector<double> data) { // Вычисление функции F0
+double KS(vector<double> data) { // Вычисление значения статистики Колмогорова-Смирнова
+	double max = 0;// max supremum
+	double curr = 0;// current supremum
+	double count_low = 0;
+	double count_high = 0;
+	double sum_low = 0;
+	double sum_high = 0;
 	int n = data.size();
-	vector <double> tmp(n);
-	for (int i = 0; i < n; i++)
-		tmp[i] = (double)(i + 1) / n;
-	return tmp;
-}
-
-vector <double> F(vector<double> data) { // Вычисление функции F
-	int n = data.size();
-	vector <double> tmp(n);
-	for (int i = 0; i < n; i++)
-		tmp[i] = 0.5 * (1 + erf((data[i] - mean(data)) / (sqrt(2) * sqrt(disp(data, mean(data))))));
-	return tmp;
+	double mean_ = mean(data);
+	double sigma = sqrt(disp(data, mean_));
+	for (int i = 0; i < n - 1; i++)
+	{
+		if (data[i] != data[i + 1])
+		{
+			count_high++;
+			sum_low = abs(0.5 * (1 + erf((data[i] - mean_) / (sqrt(2) * sigma))) - (count_low / n));
+			sum_high = abs((count_high / n) - 0.5 * (1 + erf((data[i] - mean_) / (sqrt(2) * sigma))));
+			update_max(sum_high, sum_low);// Максимум сравнения записываем в sum_high(текущий Sup)
+			update_max(max, sum_high);
+			count_low = count_high;
+			if (i == (n - 2))
+			{
+				count_high++;
+				sum_low = abs(0.5 * (1 + erf((data[i] - mean_) / (sqrt(2) * sigma))) - (count_low / n));
+				sum_high = abs((count_high / n) - 0.5 * (1 + erf((data[i] - mean_) / (sqrt(2) * sigma))));
+				update_max(sum_high, sum_low);// Максимум сравнения записываем в sum_high
+				update_max(max, sum_high);
+				count_low = count_high;
+			}
+		}
+		else
+		{
+			count_high++;
+			if (i == (n - 2))
+			{
+				count_high++;
+				sum_low = abs(0.5 * (1 + erf((data[i] - mean_) / (sqrt(2) * sigma))) - (count_low / n));
+				sum_high = abs((count_high / n) - 0.5 * (1 + erf((data[i] - mean_) / (sqrt(2) * sigma))));
+				update_max(sum_high, sum_low);// максимум сравнения записываем в sum_high
+				update_max(max, sum_high);
+				count_low = count_high;
+			}
+		}
+	}
+	return max;
 }

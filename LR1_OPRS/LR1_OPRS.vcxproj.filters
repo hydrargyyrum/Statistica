@@ -35,6 +35,9 @@
     <ClInclude Include="t.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="f.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="f_LR1.txt">

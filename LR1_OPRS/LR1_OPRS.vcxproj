@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chi2.h" />
+    <ClInclude Include="f.h" />
     <ClInclude Include="ks.h" />
     <ClInclude Include="read.h" />
     <ClInclude Include="statisticalCharacteristics.h" />
