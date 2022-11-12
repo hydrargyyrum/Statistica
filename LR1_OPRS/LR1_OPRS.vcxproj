@@ -148,6 +148,7 @@
     <ClInclude Include="read.h" />
     <ClInclude Include="statisticalCharacteristics.h" />
     <ClInclude Include="t.h" />
+    <ClInclude Include="u.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="f_LR1.txt" />

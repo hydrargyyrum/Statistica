@@ -17,7 +17,7 @@ double mean(vector<double> data) { // ¬ычисление выборочного математического ожи
 	double sum = 0;
 	for (int i = 0; i < n; i++)
 		sum = sum + data[i];
-	return sum / n;
+	return sum / (double) n;
 }
 
 double S(double sx, double sy, int n, int m) {

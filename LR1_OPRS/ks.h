@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath> 
+#include <algorithm>
 #include <cstdlib>
 #include "statisticalCharacteristics.h"
 using namespace std;
@@ -24,15 +25,14 @@ vector <double> sort_(vector <double> data) { // Сортировка векто
 	}
 
 	double temp = -1000000.0;
-	for (int i = 0; i < (n - 1); i++)
-	{
-		if (tmp[i] >= tmp[i + 1]) {
-			temp = tmp[i + 1];
-			tmp[i + 1] = tmp[i];
-			tmp[i] = temp;
-			//cout <<"443=" << tmp[i] << endl;
-		}
-	}
+	for (int j = 1; j < n; j++)
+		for (int i = 0; i < (n - 1); i++)
+			if (tmp[i] > tmp[i + 1]) {
+				temp = tmp[i];
+				tmp[i] = tmp[i + 1];
+				tmp[i + 1] = temp;
+			}
+
 	return tmp;
 };
 
@@ -50,13 +50,13 @@ double KS(vector<double> data_) { // Вычисление значения ст�
 	vector <double> data(n);
 	data = sort_(data_);
 
-	for (int i = 0; i < n - 1; i++)
+	for (int i = 0; i < (n - 1); i++)
 	{
 		if (data[i] != data[i + 1])
 		{
 			count_high++;
-			sum_low = abs(0.5 * (1 + erf((data[i] - mean_) / (sqrt(2) * sigma))) - (count_low / n));
-			sum_high = abs((count_high / n) - 0.5 * (1 + erf((data[i] - mean_) / (sqrt(2) * sigma))));
+			sum_low = abs(0.5 * (1 + erf((data[i] - mean_) / (sqrt(2) * sigma))) - (count_low / (double)n));
+			sum_high = abs((count_high / (double)n) - 0.5 * (1 + erf((data[i] - mean_) / (sqrt(2) * sigma))));
 			calc_max(sum_high, sum_low);// Максимум сравнения записываем в sum_high(текущий Sup)
 			calc_max(max, sum_high);
 			count_low = count_high;
@@ -76,8 +76,8 @@ double KS(vector<double> data_) { // Вычисление значения ст�
 			if (i == (n - 2))
 			{
 				count_high++;
-				sum_low = abs(0.5 * (1 + erf((data[i] - mean_) / (sqrt(2) * sigma))) - (count_low / n));
-				sum_high = abs((count_high / n) - 0.5 * (1 + erf((data[i] - mean_) / (sqrt(2) * sigma))));
+				sum_low = abs(0.5 * (1 + erf((data[i] - mean_) / (sqrt(2) * sigma))) - (count_low / (double)n));
+				sum_high = abs((count_high / (double)n) - 0.5 * (1 + erf((data[i] - mean_) / (sqrt(2) * sigma))));
 				calc_max(sum_high, sum_low);// максимум сравнения записываем в sum_high
 				calc_max(max, sum_high);
 				count_low = count_high;

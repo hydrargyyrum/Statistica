@@ -9,7 +9,6 @@ using namespace std;
 
 vector <double> sort(vector <double> data) { // Сортировка вектора по возрастанию 
 	int n = data.size();
-
 	vector <double> tmp(n);
 	for (int i = 0; i < n; i++)
 	{
@@ -17,15 +16,15 @@ vector <double> sort(vector <double> data) { // Сортировка вектора по возрастани
 		//cout << "i= " << tmp[i] << endl;
 	}
 
-	double temp = -10000;
-	for (int i = 0; i < (n - 1); i++)
-	{
-		if (tmp[i] >= tmp[i + 1]) {
-			temp = tmp[i + 1];
-			tmp[i + 1] = tmp[i];
-			tmp[i] = temp;
-		}
-	}
+	double temp = -1000000.0;
+	for (int j = 1; j < n; j++)
+		for (int i = 0; i < (n - 1); i++)
+			if (tmp[i] > tmp[i + 1]) {
+				temp = tmp[i];
+				tmp[i] = tmp[i + 1];
+				tmp[i + 1] = temp;
+			}
+
 	return tmp;
 };
 
@@ -48,7 +47,7 @@ vector <double> ni(vector <double> data, int N) { // Вычисление эмпирической
 		}
 
 		tmp[k] = (double)count / (double)n;
-		//cout << "emp = " << tmp[k] << endl;
+		//cout /* << "emp = " */ << tmp[k] << endl;
 	}
 	return tmp;
 }
@@ -63,7 +62,7 @@ vector <double> npi(vector <double> data, int N) { // Вычисление теоретической
 	for (int k = 0; k < N; k++) {
 	tmp[k] = 0.5 * (erf((data[0] + (k + 1) * length - mean_) / (sqrt(2) * sqrt(disp_))) -
 		erf((data[0] + k * length - mean_) / (sqrt(2) * sqrt(disp_))));
-		cout << "teor = " << tmp[k] << endl;
+		cout /* << "teor = " */ << tmp[k] << endl;
 	}
 	return tmp;
 }

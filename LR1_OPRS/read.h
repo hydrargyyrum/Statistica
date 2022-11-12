@@ -19,6 +19,7 @@ vector <double> data_(string name) {
     ifstream file(name);
     for (int i = 0; i < Count; i++) {
         file >> data[i];
+       // cout << data[i] << endl;
     }
 
     return data;
