@@ -35,11 +35,15 @@ void main() {
 	//cout << "T4-10=" << t(dataLR2_4, dataLR2_10) << endl;
 	//cout << "F2-10=" << f(dataLR2_2, dataLR2_10) << endl;
 	//cout << "F4-10=" << f(dataLR2_4, dataLR2_10) << endl;
-
+	
 	////LR3
 	cout << "KS=" << KS(dataLR2_2) << endl;
 	cout << "KS=" << KS(dataLR2_4) << endl;
 	cout << "KS=" << KS(dataLR2_10) << endl;
-	//cout << "U2-10=" << u(dataLR3_2, dataLR3_10) << endl;
-	//cout << "U4-10=" << u(dataLR3_2, dataLR3_10) << endl;
+	double U210 = u(dataLR3_2, dataLR3_10);
+	double U410 = u(dataLR3_4, dataLR3_10);
+	cout << "U2-10=" << U210 << endl;
+	cout << "U4-10=" << U410 << endl;
+	cout << "Z2-10=" << z(U210, dataLR3_2, dataLR3_10) << endl;
+	cout << "Z4-10=" << z(U410, dataLR3_4, dataLR3_10) << endl;
 }
